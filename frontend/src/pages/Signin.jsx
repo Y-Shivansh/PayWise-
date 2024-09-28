@@ -6,11 +6,13 @@ import { SubHeading } from "../components/SubHeading"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
+import { Loading } from "../components/Loading"
 
 export const Signin = () => {
     const navigate = useNavigate()
-    const [email, setEmail] = useState("")
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false)
     return <div className="h-screen bg-[#e0f5fd] flex flex-col justify-center items-center">
         <div className="w-96 text-center p-8 bg-gray-100 rounded-xl shadow-lg">
             <Heading label={"Sign in"} />
@@ -34,31 +36,40 @@ export const Signin = () => {
                 }}
             />
             <div className=" pt-4">
-                <Button
-                    label={"Sign In"}
-                    onClick={async () => {
-                        if(!email || !password){
-                            console.log("All fields are required.");
-                            return;
-                        }
-                        try {
-                            const response = await axios.post("http://localhost:3000/api/vi/user/signin", {
-                                email,
-                                password
-                            })
-                            if(response.data.message === 'Logged In successfully'){
-                                localStorage.setItem('user', JSON.stringify(response.data.user));
-                                localStorage.setItem('firstName', JSON.stringify(response.data.firstName));
-                                navigate("/dashboard")
-                            } else {
-                                console.log("Signin failed: ", response.data.message);
+                {loading ? (<Loading />) : 
+                (
+                    <Button
+                        label={"Sign In"}
+                        onClick={async () => {
+                            setLoading(true)
+                            if (!email || !password) {
+                                console.log("All fields are required.");
+                                setLoading(false)
+                                return;
                             }
-                        }
-                        catch (err) {
-                            console.log("Error Logging in: ", err.data);
 
-                        }
-                    }} />
+                            try {
+                                const response = await axios.post("http://localhost:3000/api/vi/user/signin", {
+                                    email,
+                                    password
+                                })
+                                if (response.data.message === 'Logged In successfully') {
+                                    localStorage.setItem('user', JSON.stringify(response.data.user));
+                                    localStorage.setItem('firstName', JSON.stringify(response.data.firstName));
+                                    localStorage.setItem('token', response.data.token)
+                                    navigate("/dashboard")
+                                } else {
+                                    console.log("Signin failed: ", response.data.message);
+                                }
+                            }
+                            catch (err) {
+                                console.log("Error Logging in: ", err.data);
+                            }
+                            finally{
+                                setLoading(false)
+                            }
+                        }} />
+                )}
             </div>
             <BottomWarning label={"Do not have an Account?"} buttonText={"Sign Up"} to={"/signup"} />
         </div>

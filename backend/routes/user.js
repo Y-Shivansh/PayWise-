@@ -51,23 +51,21 @@ router.post("/signup", async (req, res) => {
         lastName: data.lastName,
     })
 
-    // saving userId so that i can encode it
+    //-------------------------- saving userId so that i can encode it
     const userId= user._id
 
-     /////--- creating new account ---//////////
+    //-------------------------- creating new account ---//////////
 
-     await Account.create({
+    await Account.create({
         userId,  
         balance: 1+ Math.random() * 10000
      })
 
-     ///----------------------------/////
-
-    // creating token
+    //------------------------- creating token
     const token = jwt.sign({
         userId
     }, JWT_SECRET);
-    
+
     return res.json({
         message: "User created successfully",
         user: data.email,
@@ -88,16 +86,19 @@ router.post("/signin", async (req, res) => {
         email: body.email
     })
     const firstName = user.firstName
-    const userId= user._id; 
+    const userId = user._id
+    await Account.findOne({
+        userId: userId
+    })
     if (user) {
         const token = jwt.sign({
             userId: user._id
         }, JWT_SECRET)
         return res.json({
             message: "Logged In successfully",
-            token: token,
             user: body.email,
-            firstName: firstName
+            firstName: firstName,
+            token: token
         })
     }
     res.status(411).json({

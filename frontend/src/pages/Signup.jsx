@@ -57,6 +57,7 @@ export const Signup = () => {
                             if (response.data.message === "User created successfully") {
                                 localStorage.setItem('user', JSON.stringify(response.data.user));
                                 localStorage.setItem('firstName', JSON.stringify(response.data.firstName));
+                                localStorage.setItem('token', response.data.token)
                                 navigate("/dashboard");
                             } else {
                                 console.log("Signup failed: ", response.data.message);

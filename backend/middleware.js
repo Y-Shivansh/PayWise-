@@ -10,7 +10,7 @@ const authMiddleware= (req,res,next)=>{
         const decoded= jwt.verify(token, JWT_SECRET);
         if(decoded){
             req.userId= decoded.userId
-            console.log("done");
+            // console.log("done");
             next();
         }
         else{
