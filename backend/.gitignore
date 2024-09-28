@@ -1,1 +1,63 @@
-node_modules
+# Node.js dependencies
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+
+# Configuration files with sensitive data
+config.js
+
+# Cache and build files
+.DS_Store
+*.tmp
+*.cache
+
+# Mac specific files
+.DS_Store
+
+# Coverage directory used by testing frameworks
+coverage/
+
+# Temp files
+tmp/
+*.tmp
+
+# Ignore local development environment settings
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Production build files (if applicable)
+dist/
+build/
+
+# Optional npm packages directory for specific installations
+.pnp
+.pnp.js
+
+# Logs
+*.log
+
+# npm package files
+package-lock.json
+yarn.lock
+
+# Optional eslint cache
+.eslintcache
+
+# Ignore JetBrains IDE project files
+.idea/
+
+# Ignore WebStorm project files
+ws-*
+
+# Ignore operating system or editor files
+Thumbs.db
