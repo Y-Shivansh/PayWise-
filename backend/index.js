@@ -9,4 +9,4 @@ app.use("/api/vi", mainRouter)
 
 app.listen(3000,()=>{
     console.log("server running");
-}) 
+})

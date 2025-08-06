@@ -28,8 +28,6 @@ router.post("/transfer", authMiddleware, async (req, res) => {
         });
     }
 
-    // The .session(session) method is called on the Mongoose query to associate the operation with the transaction session. This means these findOne operations are now part of the transaction.
-    // By using this, you ensure that the operations are aware of the transaction and will respect its boundaries. If the transaction is aborted, any changes made by these operations will be rolled back.
     const toAccount = await Account.findOne({ userId: to }).session(session);
     if (!toAccount) {
         await session.abortTransaction();
@@ -37,7 +35,7 @@ router.post("/transfer", authMiddleware, async (req, res) => {
             message: "Invalid Account"
         });
     }
-
+    
     // Performing transaction
     await Account.updateOne({ userId: req.userId }, {
         $inc: {
@@ -49,7 +47,7 @@ router.post("/transfer", authMiddleware, async (req, res) => {
             balance: amount
         }
     }).session(session);
-
+    
     // Commit transaction
     await session.commitTransaction();
     session.endSession();
@@ -59,3 +57,6 @@ router.post("/transfer", authMiddleware, async (req, res) => {
 });
 
 module.exports = router;
+
+// The .session(session) method is called on the Mongoose query to associate the operation with the transaction session. This means these findOne operations are now part of the transaction.
+// By using this, you ensure that the operations are aware of the transaction and will respect its boundaries. If the transaction is aborted, any changes made by these operations will be rolled back.

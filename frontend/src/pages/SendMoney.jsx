@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SubHeading } from "../components/SubHeading";
+// import { SubHeading } from "../components/SubHeading";
 import { Button } from "../components/Button";
 import PaywiseBG from '../assets/PaywiseBG.jpg';
 import PayWise from '../assets/PayWise.png';

@@ -11,9 +11,6 @@ yarn-error.log*
 # Environment variables
 .env
 
-# Configuration files with sensitive data
-config.js
-
 # Cache and build files
 .DS_Store
 *.tmp

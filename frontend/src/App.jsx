@@ -3,15 +3,13 @@ import { Signin } from './pages/Signin'
 import { Signup } from './pages/Signup'
 import { Dashboard } from './pages/Dashboard'
 import { SendMoney } from './pages/SendMoney'
-import { Heading } from './components/Heading'
-import './index.css';
 import { LandingPage } from './pages/Landing'
+import './index.css';
 
 function App() {
 
   return (
     <>
-    
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<LandingPage/>}/>
