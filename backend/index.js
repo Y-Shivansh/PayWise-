@@ -7,6 +7,12 @@ app.use(express.json());
 app.use(cors())
 app.use("/api/vi", mainRouter)
 
+app.get('/health', (req, res) => {
+    res.status(200).json({
+        status: "UP"
+    })
+})
+
 app.listen(3000,()=>{
     console.log("server running");
 })
