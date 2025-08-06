@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react"
 import { Button } from "./Button"
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios'
 import { Loading } from "./Loading";
 export const Users = ({ email }) => {
@@ -12,7 +13,7 @@ export const Users = ({ email }) => {
         const fetchUsers = async () => {
             setLoading(true)
             try {
-                const response = await axios.get("http://localhost:3000/api/vi/user/bulk?filter=" + filter);
+                const response = await axios.get(`${import.meta.env.VITE_APP_BASE_URI}/user/bulk?filter=${filter}`);
                 const filteredUsers = response.data.user.filter(user => user.email !== email)
                 
                 setUsers(filteredUsers)
@@ -25,7 +26,7 @@ export const Users = ({ email }) => {
             }
         }
         fetchUsers();
-    }, [filter])
+    }, [filter, email])
     return <div className="bg-[#e0f5fd] shadow-md px-4 py-3 rounded-2xl">
         <div className="font-bold text-sm">
             Users
@@ -59,7 +60,7 @@ function User({ user }) {
             </div>
         </div>
         <div className="">
-            <Button onClick={(e) => {
+            <Button onClick={() => {
                 navigate("/send?id=" + user._id + "&name=" + user.firstName)
             }} label={"Send Money"} />
         </div>

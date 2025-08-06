@@ -4,8 +4,10 @@ const mainRouter= require("./routes/index")
 
 const app = express();
 app.use(express.json());
-app.use(cors())
-app.use("/api/vi", mainRouter)
+
+const allowedOrigins = ["http://localhost:5174", "http://localhost:5173", "https://pay-wise-teal.vercel.app"]
+app.use(cors(allowedOrigins))
+app.use("/api/v1", mainRouter)
 
 app.get('/health', (req, res) => {
     res.status(200).json({
